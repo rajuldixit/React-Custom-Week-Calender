@@ -9,21 +9,11 @@ const useWeekCalender = (initialValue: any) => {
     setDates(initialValue)
   }
   const nextWeek = () => {
-    console.log('end date :',endDate, ', start date :', startDate)
-    const newStartDate = moment(endDate).add(1, 'days').format("MM/DD/YYYY");
-    console.log('new start date :',startDate)
-    setStartDate(newStartDate);
-    const newEndDate = moment(endDate).add(8, 'days').format("MM/DD/YYYY");
-    console.log('new end date :', newEndDate);
-    setStartDate(newStartDate);
-    setEndDate(newEndDate)
     console.log(startDate, endDate)
   }
   const prevWeek = () => {
     console.log('here prev')
   }
-  // const startOfTheWeek = moment().startOf('week').format('MM/DD/YYYY')
-  // const endOfTheWeek = moment().endOf('week').format('MM/DD/YYYY')
   const weekCount = moment().isoWeek()
   const month = moment().format('MMM')
 

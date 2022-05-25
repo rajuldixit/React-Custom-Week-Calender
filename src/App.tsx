@@ -4,7 +4,7 @@ import Landing from './Pages/Landing'
 
 function App() {
   return (
-    <div className="App">
+    <div className="px-24 App">
       <Landing />
     </div>
   );
