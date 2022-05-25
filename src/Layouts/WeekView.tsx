@@ -2,8 +2,8 @@ import React from 'react'
 
 function WeekView(props:any) {
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-//   const dates: Array<string> = props.dates;
-  const dates = ['22', '24', '23', '22', '24', '23', '25']  
+  const dates: Array<string> = props.dates;
+//   const dates = ['22', '24', '23', '22', '24', '23', '25']  
   console.log(dates)
   return (
     <div className="container mx-auto mt-10">

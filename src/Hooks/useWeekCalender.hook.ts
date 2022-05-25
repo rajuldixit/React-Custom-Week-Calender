@@ -5,17 +5,20 @@ const useWeekCalender = (initialValue: any) => {
   const [dates, setDates] = useState(initialValue);
   const [startDate, setStartDate] = useState(moment().startOf('week').format('MM/DD/YYYY'))
   const [endDate, setEndDate] = useState(moment().endOf('week').format('MM/DD/YYYY'))
+  const weekCount = moment().isoWeek()
+  const month = moment().format('MMM')
+
   const reset = () => {
     setDates(initialValue)
   }
+
   const nextWeek = () => {
     console.log(startDate, endDate)
   }
+
   const prevWeek = () => {
     console.log('here prev')
   }
-  const weekCount = moment().isoWeek()
-  const month = moment().format('MMM')
 
   const enumerateDaysBetweenDates = (startDate: string, endDate: string) => {
     let date = []
@@ -25,9 +28,13 @@ const useWeekCalender = (initialValue: any) => {
     }
     setDates(date);
   }
+
   useEffect(()=> {
+    debugger
+    console.log('use effects called');
     enumerateDaysBetweenDates(startDate, endDate);
   }, [startDate, endDate]);
+
   return [dates, month, weekCount, reset, nextWeek, prevWeek] 
 }
 

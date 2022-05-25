@@ -1,4 +1,3 @@
-import React from 'react'
 import useWeekCalender from '../Hooks/useWeekCalender.hook'
 import WeekView from '../Layouts/WeekView';
 
@@ -9,8 +8,10 @@ function Week() {
     dates: dates,
     next: () => {},
     prev: () => {},
-    month: '',
-    weekOfTheYear: 21
+    month: month,
+    weekOfTheYear: 21,
+    reset: reset,
+    weekOfYear: weekOfYear
   }
   WeekViewProps.next = () => {
     nextWeek();
@@ -18,7 +19,6 @@ function Week() {
   WeekViewProps.prev = () => {
     prevWeek()
   }
-  console.log(dates);
   return (
     <WeekView {...WeekViewProps}/>
   )
