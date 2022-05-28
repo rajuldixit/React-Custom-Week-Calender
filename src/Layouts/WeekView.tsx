@@ -101,7 +101,7 @@ function WeekView(props:WeekProps) {
                 <tr className='text-center h-20'>
                     {
                         dates?.map((date, index) => {
-                            return <td className={"border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300 " + ((isTodaysDate(date, index)) ? "bg-pink-200 text-pink-600 font-semibold" : "text-gray-500")} key={index}>
+                            return <td className={"border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease " + ((isTodaysDate(date, index)) ? "bg-pink-200 text-pink-600 font-semibold hover:bg-pink-900 hover:text-slate-200" : "text-gray-500  hover:bg-gray-300")} key={index}>
                                 <span>
                                 {
                                   `${formatDate(date, index)}`
