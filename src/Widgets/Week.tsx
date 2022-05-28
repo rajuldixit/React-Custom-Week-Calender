@@ -11,11 +11,11 @@ function Week() {
 
   let WeekViewProps = {
     dates: dates,
+    todaysDate: todaysDate,
+    weekOfYear: weekOfYear,
     next: () => {},
     prev: () => {},
-    todaysDate: todaysDate,
-    reset: () => {},
-    weekOfYear: weekOfYear
+    reset: () => {}
   }
   
   WeekViewProps.next = () => {
