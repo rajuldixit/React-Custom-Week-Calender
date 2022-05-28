@@ -1,41 +1,49 @@
 import {useState, useEffect} from 'react'
 import moment from 'moment'
 
-const useWeekCalender = (initialValue: any) => { 
-  const [dates, setDates] = useState(initialValue);
-  const [startDate, setStartDate] = useState(moment().startOf('week').format('MM/DD/YYYY'))
-  const [endDate, setEndDate] = useState(moment().endOf('week').format('MM/DD/YYYY'))
-  const weekCount = moment().isoWeek()
-  const month = moment().format('MMM')
+export interface State {
+  startDate: string,
+  endDate: string
+}
 
-  const reset = () => {
-    setDates(initialValue)
-  }
+const useWeekCalender = (initialValue: State) => { 
+  const [dates, setDates] = useState(['']);
+  const [startDate, setStartDate] = useState(initialValue.startDate)
+  const [endDate, setEndDate] = useState(initialValue.endDate)
+  const [weekCount, setWeekCount] = useState(moment().isoWeek())
+  const [todaysDate, settodaysDate ]= useState(moment().format("MMM DD, YYYY"))
 
-  const nextWeek = () => {
-    console.log(startDate, endDate)
-  }
-
-  const prevWeek = () => {
-    console.log('here prev')
-  }
-
-  const enumerateDaysBetweenDates = (startDate: string, endDate: string) => {
-    let date = []
-    while(moment(startDate) <= moment(endDate)){
-      date.push(startDate);
-      startDate = moment(startDate).add(1, 'days').format("MM/DD/YYYY");
+  const enumerateDaysBetweenDates = (sDate: string, eDate: string) => {
+    let date = new Array();
+    while(moment(sDate) <= moment(eDate)){
+      date.push(sDate);
+      sDate = moment(sDate).add(1, 'days').format("MM/DD/YYYY");
     }
-    setDates(date);
+    setWeekCount(moment(sDate, eDate).isoWeek());
+    setDates(date)
   }
 
   useEffect(()=> {
-    debugger
-    console.log('use effects called');
     enumerateDaysBetweenDates(startDate, endDate);
   }, [startDate, endDate]);
 
-  return [dates, month, weekCount, reset, nextWeek, prevWeek] 
+  const setNextWeekDates = () => {
+    setStartDate(moment(endDate).add(1, 'days').format("MM/DD/YYYY"))
+    setEndDate(moment(endDate).add(7, 'days').format('MM/DD/YYYY'))
+  }
+
+  const setPrevWeekDates = () => {
+    setEndDate(moment(startDate).subtract(1, 'days').format("MM/DD/YYYY"))
+    setStartDate(moment(startDate).subtract(7, 'days').format('MM/DD/YYYY'))
+  }
+
+  const resetCalender = () => {
+    setStartDate(moment().startOf('week').format('MM/DD/YYYY'))
+    setEndDate(moment().endOf('week').format('MM/DD/YYYY'))
+  }
+
+
+  return [dates, todaysDate, weekCount, setNextWeekDates, setPrevWeekDates, resetCalender] as const
 }
 
 export default useWeekCalender

@@ -1,24 +1,34 @@
+import moment from 'moment';
 import useWeekCalender from '../Hooks/useWeekCalender.hook'
 import WeekView from '../Layouts/WeekView';
 
 function Week() {
-  const [dates, month, weekOfYear, reset, nextWeek, prevWeek] = useWeekCalender('');
+  let initialState = {
+    startDate: moment().startOf('week').format('MM/DD/YYYY'),
+    endDate: moment().endOf('week').format('MM/DD/YYYY')
+  }
+  const [dates, todaysDate, weekOfYear,setNextWeekDates, setPrevWeekDates, resetCalender] = useWeekCalender(initialState);
 
   let WeekViewProps = {
     dates: dates,
     next: () => {},
     prev: () => {},
-    month: month,
-    weekOfTheYear: 21,
-    reset: reset,
+    todaysDate: todaysDate,
+    reset: () => {},
     weekOfYear: weekOfYear
   }
+  
   WeekViewProps.next = () => {
-    nextWeek();
+    setNextWeekDates()
   }
   WeekViewProps.prev = () => {
-    prevWeek()
+    setPrevWeekDates()
   }
+
+  WeekViewProps.reset = () => {
+    resetCalender()
+  }
+
   return (
     <WeekView {...WeekViewProps}/>
   )

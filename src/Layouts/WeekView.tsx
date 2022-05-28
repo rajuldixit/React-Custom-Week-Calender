@@ -1,18 +1,43 @@
-import React from 'react'
+import moment from 'moment';
+import useFormatDates from '../Hooks/useFormatDates.hook';
 
-function WeekView(props:any) {
-  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+export interface WeekProps {
+  dates: Array<string>,
+  todaysDate: string,
+  weekOfYear: number,
+  next(): void,
+  prev(): void,
+  reset(): void
+}
+
+function WeekView(props:WeekProps) {
+  const days = ['Sun','Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   const dates: Array<string> = props.dates;
-//   const dates = ['22', '24', '23', '22', '24', '23', '25']  
-  console.log(dates)
+  const [getFormatedDate] = useFormatDates()
+
+  const formatDate = (date: string, index: number) => {
+    let formatedDate = getFormatedDate(date);
+    return formatedDate
+  }
+
+  const isTodaysDate = (date: string, index: number) => {
+    return moment(date).isSame(moment(new Date()).format('MM/DD/YYYY'))
+  }
+
   return (
     <div className="container mx-auto mt-10">
       <div className="wrapper bg-white rounded shadow w-full"> 
         <div className="header flex justify-between border-b p-2">
           <span className="text-lg font-bold">
-            2020 July
+            {props.todaysDate}
           </span>
           <div className="buttons">
+            <button className="p-1 mr-10" onClick={() => props.reset()}>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+              </path>
+            </svg>
+            </button>
             <button className="p-1" onClick={() => props.prev()}>
               <svg
                 width="1em"
@@ -66,7 +91,7 @@ function WeekView(props:any) {
             <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
                 <tr>
                     {days.map((day, index) => {
-                        return <th className='p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs' key={index}>
+                        return <th className='p-2 border-r h-10 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 xl:text-sm text-xs {(isTodaysDate(date, index)) ? "active" : ""}' key={index}>
                                 <span>{day}</span>
                                 </th>
                     })}
@@ -76,8 +101,12 @@ function WeekView(props:any) {
                 <tr className='text-center h-20'>
                     {
                         dates?.map((date, index) => {
-                            return <td className='border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300' key={index}>
-                                <span className="text-gray-500">{date}</span>
+                            return <td className={"border p-1 h-40 xl:w-40 lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300 " + ((isTodaysDate(date, index)) ? "bg-pink-200 text-pink-600 font-semibold" : "text-gray-500")} key={index}>
+                                <span>
+                                {
+                                  `${formatDate(date, index)}`
+                                }
+                                </span>
                             </td>
                         })
                     }
